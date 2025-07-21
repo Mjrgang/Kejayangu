@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keja Yangu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rock+Salt&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 0; 
+      padding: 0; 
+      background: #f7f7f7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      background: orange;
+      padding: 10px 20px;
+      color: white;
+      flex-shrink: 0;
+    }
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .logo-title {
+      display: flex;
+      align-items: center;
+    }
+    .logo-title-container {
+      display: flex;
+      flex-direction: column;
+    }
+    .logo-title img {
+      height: 120px; /* Increased logo size */
+      margin-right: 15px;
+    }
+    .logo-title h1 {
+      margin: 0;
+      font-size: 2em;
+      font-family: 'Permanent Marker', cursive;
+      white-space: nowrap;
+    }
+    .slogan {
+      color: green;
+      font-weight: bold;
+      font-size: 1em;
+      margin-top: 5px;
+      text-align: left;
+      width: 100%;
+    }
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+      margin-left: auto;
+      padding-right: 20px;
+      align-items: center;
+    }
+    .auth-btn {
+      padding: 8px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      background: white;
+      color: #2c3e50;
+      border: 2px solid #ddd;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .user-photo {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+    }
+    .user-name {
+      color: white;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    .nav {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      width: 100%;
+      justify-content: center;
+    }
+    .nav a {
+      color: white;
+      text-decoration: none;
+      padding: 5px 10px;
+      background: green;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+    .county-grid, .town-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+      padding: 15px;
+      flex-grow: 1;
+    }
+    .county-box, .town-box {
+      background: #fff;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      font-weight: bold;
+      font-size: 0.9em;
+    }
+    .county-box:hover, .town-box:hover {
+      transform: scale(1.05);
+      background: #e9e9e9;
+    }
+    .feed {
+      padding: 10px;
+      display: none;
+      flex-grow: 1;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .post {
+      background: white;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .swiper-container {
+      width: 100%;
+      height: 350px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .lister-info {
+      display: flex;
+      align-items: center;
+      margin: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .lister-profile-pic {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      object-fit: cover;
+      border: 2px solid #f1f1f1;
+    }
+    .lister-name {
+      font-size: 14px;
+      color: #555;
+      font-weight: 600;
+    }
+    .post-details {
+      padding: 0 15px 15px;
+    }
+    .upload-form {
+      margin: 10px auto;
+      max-width: 600px;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      display: none;
+      flex-grow: 1;
+    }
+    .upload-form h2 {
+      text-align: center;
+      color: green;
+      margin-top: 0;
+    }
+    .upload-form input, 
+    .upload-form textarea, 
+    .upload-form select {
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .upload-form button {
+      background: green;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background: #222;
+      color: white;
+      flex-shrink: 0;
+    }
+    .page-content {
+      padding: 20px;
+      max-width: 800px;
+      margin: 10px auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      display: none;
+      flex-grow: 1;
+    }
+    .back-button {
+      background: orange;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      font-size: 0.9em;
+    }
+    .form-group {
+      margin-bottom: 12px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+    .main-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .about-content, .contact-content {
+      line-height: 1.6;
+    }
+    .about-content h3, .contact-content h3 {
+      color: green;
+      margin-top: 20px;
+    }
+    .contact-method {
+      margin-bottom: 15px;
+    }
+    .contact-method i {
+      color: orange;
+      margin-right: 10px;
+    }
+    .image-preview {
+      max-width: 100%;
+      max-height: 200px;
+      margin-top: 10px;
+      display: none;
+    }
+    .auth-form {
+      max-width: 500px;
+      margin: 30px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      display: none;
+    }
+    .auth-form h2 {
+      text-align: center;
+      color: green;
+      margin-top: 0;
+    }
+    .auth-form input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .profile-photo-upload {
+      margin: 20px 0;
+    }
+    .swiper-pagination-bullet-active {
+      background: orange !important;
+    }
+    .swiper-button-next, .swiper-button-prev {
+      color: orange !important;
+    }
+    .form-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .form-buttons button {
+      flex: 1;
+    }
+    #townDropdown {
+      display: none;
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .interaction-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      padding: 0 15px 15px;
+    }
+    .like-btn, .comment-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+    }
+    .like-btn {
+      background: #ff6b6b;
+      color: white;
+    }
+    .comment-btn {
+      background: #4dabf7;
+      color: white;
+    }
+    .comments-section {
+      padding: 0 15px 15px;
+      display: none;
+    }
+    .comment-input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+    .comment {
+      margin-top: 10px;
+      padding: 8px;
+      background: #f8f9fa;
+      border-radius: 4px;
+    }
+    .comment-author {
+      font-weight: bold;
+      font-size: 0.9em;
+    }
+    .comment-text {
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-content">
+      <div class="logo-title">
+        <img src="logo.png.png" alt="Keja Yangu Logo">
+        <div class="logo-title-container">
+          <h1>KEJA YANGU</h1>
+          <p class="slogan">Pata Keja yako sasa</p>
+        </div>
+      </div>
+      <div class="auth-buttons">
+        <a href="#" onclick="showLoginForm()" class="auth-btn login-btn">Log In</a>
+        <a href="#" onclick="showSignupForm()" class="auth-btn signup-btn">Sign Up</a>
+      </div>
+      <div class="nav">
+        <a href="#" onclick="goHome()">Home</a>
+        <a href="#" onclick="showPage('about')">About</a>
+        <a href="#" onclick="showPage('contact')">Contact</a>
+        <a href="#" onclick="showUploadForm()">List</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div id="countySection" class="county-grid"></div>
+    <div id="townSection" class="town-grid" style="display:none;"></div>
+    <div id="feedSection" class="feed" style="display:none;"></div>
+    
+    <div id="uploadSection" class="upload-form">
+      <h2>Upload Your Listing</h2>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" placeholder="3-Bedroom Apartment">
+      </div>
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="text" id="price" placeholder="Ksh 15,000">
+      </div>
+      <div class="form-group">
+        <label for="county">County</label>
+        <select id="county" onchange="updateTownDropdown()">
+          <option value="">Select County</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="town">Town/Area</label>
+        <select id="townDropdown">
+          <option value="">Select Town</option>
+        </select>
+        <input type="text" id="location" placeholder="Or enter new town name" style="display:none;">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" placeholder="Spacious apartment with balcony and parking"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="map">Google Maps Link</label>
+        <input type="text" id="map" placeholder="https://maps.google.com/..." required>
+      </div>
+      <div class="form-group">
+        <label for="imageInput">Upload Photos (Maximum 5)</label>
+        <input type="file" id="imageInput" accept="image/*" multiple onchange="previewImages(event)">
+        <div id="imagePreviews" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+      </div>
+      <div class="form-buttons">
+        <button onclick="postListing()">Post Now</button>
+        <button class="back-button" onclick="goBackFromUpload()">Back</button>
+      </div>
+    </div>
+
+    <div id="signupForm" class="auth-form">
+      <h2>Create Account</h2>
+      <div class="form-group">
+        <label for="signup-name">Full Name</label>
+        <input type="text" id="signup-name" placeholder="Enter your full name" required>
+      </div>
+      <div class="form-group">
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" placeholder="Create password" required>
+      </div>
+      <div class="form-group profile-photo-upload">
+        <label for="signup-photo">Profile Photo (Required)</label>
+        <input type="file" id="signup-photo" accept="image/*" required onchange="previewProfilePhoto(event)">
+        <img id="signup-photo-preview" class="image-preview" alt="Profile Preview">
+      </div>
+      <button onclick="createAccount()" class="auth-btn" style="background: green; color: white; width: 100%;">Sign Up</button>
+      <p style="text-align: center; margin-top: 15px;">Already have an account? <a href="#" onclick="showLoginForm()">Log In</a></p>
+      <button class="back-button" onclick="goHome()">Back</button>
+    </div>
+
+    <div id="loginForm" class="auth-form">
+      <h2>Welcome Back</h2>
+      <div class="form-group">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="Enter password" required>
+      </div>
+      <button onclick="loginUser()" class="auth-btn" style="background: green; color: white; width: 100%;">Log In</button>
+      <p style="text-align: center; margin-top: 15px;">Don't have an account? <a href="#" onclick="showSignupForm()">Sign Up</a></p>
+      <button class="back-button" onclick="goHome()">Back</button>
+    </div>
+
+    <div id="aboutPage" class="page-content">
+      <button class="back-button" onclick="goHome()">Back</button>
+      <h2>About Keja Yangu</h2>
+      <div class="about-content">
+        <p>Welcome to Keja Yangu, Kenya's premier online platform connecting landlords and tenants across all 47 counties.</p>
+        <h3>Our Services</h3>
+        <p>• Verified property listings with real photos</p>
+        <p>• Direct communication between landlords and tenants</p>
+      </div>
+    </div>
+
+    <div id="contactPage" class="page-content">
+      <button class="back-button" onclick="goHome()">Back</button>
+      <h2>Contact Keja Yangu</h2>
+      <div class="contact-content">
+        <p>We'd love to hear from you! Reach out through any of these channels:</p>
+        <p>Email: support@kejayangu.co.ke</p>
+        <p>Phone: +254 798725928</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 KEJA YANGU. All rights reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script>
+    const countyTowns = {
+      "Nairobi": ["Nairobi CBD", "Westlands", "Kasarani", "Embakasi", "Dagoretti", "Langata", "Ruaraka", "Starehe", "Makadara", "Kamukunji", "Mathare", 
+                 "Kilimani", "Lavington", "Karen", "Runda", "Muthaiga", "Parklands", "South B", "South C", "Eastleigh", "Donholm", "Buruburu", 
+                 "Kileleshwa", "Hurlingham", "Ngong Road", "Thika Road", "Juja", "Kitengela", "Rongai", "Kikuyu", "Kiambu", "Thika", "Limuru", 
+                 "Githurai", "Ruiru", "Athi River", "Mlolongo", "Syokimau", "Utawala", "Embakasi Village", "Kayole", "Umoja", "Komarock", 
+                 "Dandora", "Kariobangi", "Buru Buru", "Imara Daima", "Industrial Area", "Upper Hill", "Ngara", "Pangani", "Kariokor", 
+                 "Kawangware", "Githurai 45", "Kahawa West", "Kahawa Sukari", "Roysambu", "Garden Estate", "Mirema", "Clay City", "Kasarani", 
+                 "Njiru", "Ruai", "Utawala", "Embakasi", "Donholm", "Kayole", "Umoja", "Komarock"],
+      "Baringo": ["Kabarnet", "Eldama Ravine", "Marigat", "Mogotio", "Kabartonjo", "Sacho"],
+      "Bomet": ["Bomet", "Longisa", "Sotik", "Chepalungu", "Ndanai", "Konoin"],
+      "Bungoma": ["Bungoma", "Webuye", "Kimilili", "Malakisi", "Sirisia", "Chwele"],
+      "Busia": ["Busia", "Malaba", "Nambale", "Port Victoria", "Funyula", "Lubao"],
+      "Elgeyo-Marakwet": ["Iten", "Tambach", "Chesoi", "Chepkorio", "Kapyego", "Kapsowar"],
+      "Embu": ["Embu", "Runyenjes", "Siakago", "Manyatta", "Kiritiri", "Ishiara"],
+      "Garissa": ["Garissa", "Dadaab", "Hola", "Bura", "Masalani", "Ijara"],
+      "Homa Bay": ["Homa Bay", "Oyugis", "Kendu Bay", "Rangwe", "Mbita", "Ndhiwa"],
+      "Isiolo": ["Isiolo", "Garba Tulla", "Merti", "Kinna", "Oldonyiro", "Sericho"],
+      "Kajiado": ["Kajiado", "Ongata Rongai", "Kitengela", "Ngong", "Namanga", "Isinya"],
+      "Kakamega": ["Kakamega", "Mumias", "Malava", "Butere", "Shinyalu", "Lurambi"],
+      "Kericho": ["Kericho", "Litein", "Bureti", "Sotik", "Kipkelion", "Belgut"],
+      "Kiambu": ["Kiambu", "Thika", "Ruiru", "Kikuyu", "Limuru", "Gatundu"],
+      "Kilifi": ["Kilifi", "Malindi", "Watamu", "Mariakani", "Mtwapa", "Rabai"],
+      "Kirinyaga": ["Kerugoya", "Sagana", "Wanguru", "Baricho", "Kagio", "Kutus"],
+      "Kisii": ["Kisii", "Suneka", "Ogembo", "Nyamache", "Tabaka", "Keroka"],
+      "Kisumu": ["Kisumu", "Ahero", "Katito", "Muhoroni", "Kondele", "Dago"],
+      "Kitui": ["Kitui", "Mwingi", "Mutomo", "Kibwezi", "Ikutha", "Tseikuru"],
+      "Kwale": ["Kwale", "Ukunda", "Msambweni", "Lunga Lunga", "Kinango", "Shimoni"],
+      "Laikipia": ["Nanyuki", "Rumuruti", "Nyahururu", "Dol Dol", "Ol Moran", "Kinamba"],
+      "Lamu": ["Lamu", "Mpeketoni", "Faza", "Witu", "Kiunga", "Mokowe"],
+      "Machakos": ["Machakos", "Athi River", "Mwala", "Yatta", "Kangundo", "Matungulu"],
+      "Makueni": ["Wote", "Makindu", "Sultan Hamud", "Kibwezi", "Mtito Andei", "Emali"],
+      "Mandera": ["Mandera", "El Wak", "Takaba", "Rhamu", "Lafey", "Banissa"],
+      "Marsabit": ["Marsabit", "Moyale", "Laisamis", "Loiyangalani", "Sololo", "Maikona"],
+      "Meru": ["Meru", "Maua", "Nkubu", "Timau", "Mitunguu", "Kibirichia"],
+      "Migori": ["Migori", "Rongo", "Awendo", "Kehancha", "Uriri", "Nyatike"],
+      "Mombasa": ["Mombasa", "Nyali", "Likoni", "Changamwe", "Kisauni", "Mvita"],
+      "Murang'a": ["Murang'a", "Kangema", "Kahuro", "Kiharu", "Gatanga", "Kandara"],
+      "Nakuru": ["Nakuru", "Naivasha", "Gilgil", "Molo", "Njoro", "Rongai"],
+      "Nandi": ["Kapsabet", "Nandi Hills", "Mosoriot", "Kobujoi", "Lessos", "Tinderet"],
+      "Narok": ["Narok", "Kilgoris", "Suswa", "Ololulung'a", "Ntulele", "Ewaso Nyiro"],
+      "Nyamira": ["Nyamira", "Nyansiongo", "Keroka", "Ekerenyo", "Manga", "Rigoma"],
+      "Nyandarua": ["Ol Kalou", "Nyahururu", "Njabini", "Engineer", "Kinangop", "Kipipiri"],
+      "Nyeri": ["Nyeri", "Karatina", "Othaya", "Mukurweini", "Mathira", "Tetu"],
+      "Samburu": ["Maralal", "Baragoi", "Archer's Post", "Wamba", "South Horr", "Loiyangalani"],
+      "Siaya": ["Siaya", "Ugunja", "Bondo", "Yala", "Ukwala", "Ngiya"],
+      "Taita-Taveta": ["Voi", "Mwatate", "Wundanyi", "Taveta", "Mghange", "Bura"],
+      "Tana River": ["Hola", "Garsen", "Bura", "Madogo", "Bangale", "Kipini"],
+      "Tharaka-Nithi": ["Chuka", "Kathwana", "Marimanti", "Magutuni", "Mitheru", "Nkondi"],
+      "Trans-Nzoia": ["Kitale", "Endebess", "Kiminini", "Matunda", "Sirende", "Kachibora"],
+      "Turkana": ["Lodwar", "Kakuma", "Lokichogio", "Kalokol", "Lokitaung", "Katilu"],
+      "Uasin Gishu": ["Eldoret", "Burnt Forest", "Huruma", "Ziwa", "Kimumu", "Sergoit"],
+      "Vihiga": ["Vihiga", "Mbale", "Luanda", "Serem", "Maseno", "Ebusakami"],
+      "Wajir": ["Wajir", "Habaswein", "Buna", "Griftu", "Arbajahan", "Eldas"],
+      "West Pokot": ["Kapenguria", "Makutano", "Ortum", "Sigor", "Kacheliba", "Lomut"]
+    };
+
+    const countyContainer = document.getElementById("countySection");
+    const townContainer = document.getElementById("townSection");
+    const feedSection = document.getElementById("feedSection");
+    const uploadSection = document.getElementById("uploadSection");
+    const aboutPage = document.getElementById("aboutPage");
+    const contactPage = document.getElementById("contactPage");
+    const countySelect = document.getElementById("county");
+    const townDropdown = document.getElementById("townDropdown");
+    const locationInput = document.getElementById("location");
+    const signupForm = document.getElementById("signupForm");
+    const loginForm = document.getElementById("loginForm");
+    const imagePreviews = document.getElementById("imagePreviews");
+    const signupPhotoPreview = document.getElementById("signup-photo-preview");
+
+    let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+    let currentTown = "";
+    let currentPage = "home";
+    let uploadedImages = [];
+
+    function previewImages(event) {
+      imagePreviews.innerHTML = "";
+      uploadedImages = [];
+      const files = event.target.files;
+      
+      if (files.length > 5) {
+        alert("You can upload a maximum of 5 photos");
+        event.target.value = "";
+        return;
+      }
+      
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          uploadedImages.push(e.target.result);
+          const previewDiv = document.createElement("div");
+          previewDiv.style.width = "100px";
+          previewDiv.style.height = "100px";
+          previewDiv.style.overflow = "hidden";
+          previewDiv.style.borderRadius = "4px";
+          previewDiv.style.position = "relative";
+          
+          const img = document.createElement("img");
+          img.src = e.target.result;
+          img.style.width = "100%";
+          img.style.height = "100%";
+          img.style.objectFit = "cover";
+          
+          previewDiv.appendChild(img);
+          imagePreviews.appendChild(previewDiv);
+        };
+        
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function previewProfilePhoto(event) {
+      const input = event.target;
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          signupPhotoPreview.src = e.target.result;
+          signupPhotoPreview.style.display = 'block';
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function updateTownDropdown() {
+      const county = countySelect.value;
+      townDropdown.innerHTML = '<option value="">Select Town</option>';
+      
+      if (county && countyTowns[county]) {
+        townDropdown.style.display = "block";
+        locationInput.style.display = "none";
+        
+        countyTowns[county].forEach(town => {
+          const option = document.createElement("option");
+          option.value = town;
+          option.textContent = town;
+          townDropdown.appendChild(option);
+        });
+        
+        const newTownOption = document.createElement("option");
+        newTownOption.value = "other";
+        newTownOption.textContent = "Other (specify)";
+        townDropdown.appendChild(newTownOption);
+        
+        townDropdown.onchange = function() {
+          if (this.value === "other") {
+            locationInput.style.display = "block";
+            locationInput.value = "";
+          } else {
+            locationInput.style.display = "none";
+          }
+        };
+      } else {
+        townDropdown.style.display = "none";
+        locationInput.style.display = "block";
+      }
+    }
+
+    function initializeSampleData() {
+      // Removed the sample lister posts initialization
+      if (!localStorage.getItem('users')) {
+        const sampleUsers = [
+          {
+            id: 1,
+            name: "Sample Lister",
+            email: "sample@example.com",
+            password: "password123",
+            photo: "profile.jpg"
+          }
+        ];
+        localStorage.setItem('users', JSON.stringify(sampleUsers));
+      }
+    }
+
+    function populateCountyDropdown() {
+      countySelect.innerHTML = '<option value="">Select County</option>';
+      Object.keys(countyTowns).sort().forEach(county => {
+        const option = document.createElement("option");
+        option.value = county;
+        option.textContent = county;
+        countySelect.appendChild(option);
+      });
+    }
+
+    function populateCounties() {
+      countyContainer.innerHTML = "";
+      Object.keys(countyTowns).sort().forEach(county => {
+        const div = document.createElement("div");
+        div.className = "county-box";
+        div.textContent = county;
+        div.onclick = () => showTowns(county);
+        countyContainer.appendChild(div);
+      });
+    }
+
+    function showTowns(county) {
+      currentPage = "towns";
+      hideAllSections();
+      townContainer.style.display = "grid";
+      
+      townContainer.innerHTML = "";
+      countyTowns[county].forEach(town => {
+        const div = document.createElement("div");
+        div.className = "town-box";
+        div.textContent = town;
+        div.onclick = () => showFeed(town, county);
+        townContainer.appendChild(div);
+      });
+    }
+
+    function showFeed(town, county) {
+      currentPage = "feed";
+      currentTown = `${town}, ${county}`;
+      hideAllSections();
+      feedSection.style.display = "block";
+      renderFeed();
+    }
+
+    function showUploadForm() {
+      if (!currentUser) {
+        alert("Please sign up or log in to list a property");
+        showSignupForm();
+        return;
+      }
+      
+      currentPage = "upload";
+      hideAllSections();
+      uploadSection.style.display = "block";
+      imagePreviews.innerHTML = "";
+      uploadedImages = [];
+    }
+
+    function showSignupForm() {
+      currentPage = "signup";
+      hideAllSections();
+      signupForm.style.display = "block";
+      signupPhotoPreview.style.display = 'none';
+      signupPhotoPreview.src = '';
+    }
+
+    function showLoginForm() {
+      currentPage = "login";
+      hideAllSections();
+      loginForm.style.display = "block";
+    }
+
+    function hideAllSections() {
+      countyContainer.style.display = "none";
+      townContainer.style.display = "none";
+      feedSection.style.display = "none";
+      uploadSection.style.display = "none";
+      aboutPage.style.display = "none";
+      contactPage.style.display = "none";
+      signupForm.style.display = "none";
+      loginForm.style.display = "none";
+    }
+
+    function createAccount() {
+      const name = document.getElementById("signup-name").value.trim();
+      const email = document.getElementById("signup-email").value.trim().toLowerCase();
+      const password = document.getElementById("signup-password").value;
+      const photoInput = document.getElementById("signup-photo");
+      
+      if (!name) {
+        alert("Please enter your full name");
+        return;
+      }
+      
+      if (!email || !email.includes("@") || !email.includes(".")) {
+        alert("Please enter a valid email address");
+        return;
+      }
+      
+      if (!password || password.length < 6) {
+        alert("Password must be at least 6 characters");
+        return;
+      }
+      
+      if (!photoInput.files || !photoInput.files[0]) {
+        alert("Please upload a profile photo");
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      if (users.some(user => user.email === email)) {
+        alert("An account with this email already exists");
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const newUser = {
+          id: Date.now(),
+          name,
+          email,
+          password,
+          photo: e.target.result
+        };
+        
+        users.push(newUser);
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('currentUser', JSON.stringify(newUser));
+        currentUser = newUser;
+        
+        document.getElementById("signup-name").value = "";
+        document.getElementById("signup-email").value = "";
+        document.getElementById("signup-password").value = "";
+        photoInput.value = "";
+        signupPhotoPreview.style.display = 'none';
+        signupPhotoPreview.src = '';
+        
+        updateUserProfileDisplay();
+        hideAllSections();
+        goHome();
+      };
+      
+      reader.onerror = function() {
+        alert("Error reading profile photo. Please try another image.");
+      };
+      
+      reader.readAsDataURL(photoInput.files[0]);
+    }
+
+    function loginUser() {
+      const email = document.getElementById("login-email").value.trim().toLowerCase();
+      const password = document.getElementById("login-password").value;
+      
+      if (!email || !password) {
+        alert("Please enter both email and password");
+        return;
+      }
+      
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      const user = users.find(u => u.email === email && u.password === password);
+      
+      if (user) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        currentUser = user;
+        
+        document.getElementById("login-email").value = "";
+        document.getElementById("login-password").value = "";
+        
+        updateUserProfileDisplay();
+        hideAllSections();
+        goHome();
+      } else {
+        alert("Invalid email or password");
+      }
+    }
+
+    function updateUserProfileDisplay() {
+      if (currentUser) {
+        document.querySelector('.auth-buttons').innerHTML = `
+          <div class="user-profile">
+            <img src="${currentUser.photo}" alt="${currentUser.name}" class="user-photo">
+            <span class="user-name">${currentUser.name}</span>
+            <a href="#" onclick="logout()" class="auth-btn">Logout</a>
+          </div>
+        `;
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('currentUser');
+      currentUser = null;
+      document.querySelector('.auth-buttons').innerHTML = `
+        <a href="#" onclick="showLoginForm()" class="auth-btn login-btn">Log In</a>
+        <a href="#" onclick="showSignupForm()" class="auth-btn signup-btn">Sign Up</a>
+      `;
+      goHome();
+    }
+
+    function postListing() {
+      if (!currentUser) {
+        alert("Please log in to post a listing");
+        showLoginForm();
+        return;
+      }
+      
+      const title = document.getElementById("title").value;
+      const price = document.getElementById("price").value;
+      const county = document.getElementById("county").value;
+      const town = townDropdown.value === "other" ? document.getElementById("location").value : townDropdown.value;
+      const description = document.getElementById("description").value;
+      const map = document.getElementById("map").value;
+
+      if (!title || !price || !county || !town || !map) {
+        alert("Please fill in all required fields including Google Maps link");
+        return;
+      }
+
+      const fullTownName = `${town}, ${county}`;
+      
+      if (!countyTowns[county].includes(town)) {
+        countyTowns[county].push(town);
+        localStorage.setItem('countyTowns', JSON.stringify(countyTowns));
+      }
+
+      const post = {
+        images: uploadedImages.length > 0 ? uploadedImages : ["house.jpeg"],
+        title,
+        price,
+        location: fullTownName,
+        description,
+        map,
+        lister: {
+          name: currentUser.name,
+          photo: currentUser.photo
+        },
+        likes: 0,
+        comments: []
+      };
+
+      let posts = JSON.parse(localStorage.getItem(fullTownName)) || [];
+      posts.unshift(post);
+      localStorage.setItem(fullTownName, JSON.stringify(posts));
+      
+      document.getElementById("title").value = "";
+      document.getElementById("price").value = "";
+      document.getElementById("county").value = "";
+      townDropdown.value = "";
+      document.getElementById("location").value = "";
+      document.getElementById("description").value = "";
+      document.getElementById("map").value = "";
+      document.getElementById("imageInput").value = "";
+      imagePreviews.innerHTML = "";
+      uploadedImages = [];
+      
+      showFeed(town, county);
+    }
+
+    function renderFeed() {
+      feedSection.innerHTML = `<h2 style="text-align:center; color: green; margin-top: 0;">Available Houses in ${currentTown}</h2>`;
+      const posts = JSON.parse(localStorage.getItem(currentTown)) || [];
+      
+      if (posts.length === 0) {
+        feedSection.innerHTML += `<p style="text-align:center;">No listings yet. Be the first to post!</p>`;
+      } else {
+        posts.forEach((post, index) => {
+          const div = document.createElement("div");
+          div.className = "post";
+          
+          let swiperHTML = `
+            <div class="swiper-container">
+              <div class="swiper-wrapper">
+          `;
+          
+          post.images.forEach(image => {
+            swiperHTML += `
+              <div class="swiper-slide">
+                <img src="${image}" alt="House" onerror="this.src='house.jpeg'">
+              </div>
+            `;
+          });
+          
+          swiperHTML += `
+              </div>
+              <div class="swiper-pagination"></div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
+            </div>
+          `;
+          
+          div.innerHTML = `
+            ${swiperHTML}
+            <div class="lister-info">
+              <img src="${post.lister.photo}" alt="${post.lister.name}" class="lister-profile-pic">
+              <span class="lister-name">Listed by: ${post.lister.name}</span>
+            </div>
+            <div class="post-details">
+              <h3>${post.title}</h3>
+              <p><strong>Rent:</strong> ${post.price}</p>
+              <p><strong>Location:</strong> ${post.location}</p>
+              <p><strong>Description:</strong> ${post.description}</p>
+              ${post.map ? `<p><strong>Location Map:</strong> <a href="${post.map}" target="_blank">View on Google Maps</a></p>` : ''}
+            </div>
+            <div class="interaction-buttons">
+              <button class="like-btn" onclick="likePost('${currentTown}', ${index})">Like (${post.likes || 0})</button>
+              <button class="comment-btn" onclick="toggleComments('${currentTown}', ${index})">Comment</button>
+            </div>
+            <div id="comments-${currentTown}-${index}" class="comments-section">
+              <div id="comments-list-${currentTown}-${index}">
+                ${(post.comments || []).map(comment => `
+                  <div class="comment">
+                    <div class="comment-author">${comment.author}:</div>
+                    <div class="comment-text">${comment.text}</div>
+                  </div>
+                `).join('')}
+              </div>
+              <input type="text" id="comment-input-${currentTown}-${index}" class="comment-input" placeholder="Add a comment...">
+              <button onclick="addComment('${currentTown}', ${index})" style="margin-top: 5px;">Post Comment</button>
+            </div>
+          `;
+          
+          feedSection.appendChild(div);
+          
+          new Swiper(div.querySelector('.swiper-container'), {
+            loop: true,
+            pagination: {
+              el: div.querySelector('.swiper-pagination'),
+              clickable: true,
+            },
+            navigation: {
+              nextEl: div.querySelector('.swiper-button-next'),
+              prevEl: div.querySelector('.swiper-button-prev'),
+            },
+          });
+        });
+      }
+    }
+
+    function likePost(town, postIndex) {
+      if (!currentUser) {
+        alert("Please log in to like posts");
+        showLoginForm();
+        return;
+      }
+      
+      const posts = JSON.parse(localStorage.getItem(town)) || [];
+      if (posts[postIndex]) {
+        posts[postIndex].likes = (posts[postIndex].likes || 0) + 1;
+        localStorage.setItem(town, JSON.stringify(posts));
+        renderFeed();
+      }
+    }
+
+    function toggleComments(town, postIndex) {
+      const commentsSection = document.getElementById(`comments-${town}-${postIndex}`);
+      if (commentsSection) {
+        commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
+      }
+    }
+
+    function addComment(town, postIndex) {
+      if (!currentUser) {
+        alert("Please log in to comment");
+        showLoginForm();
+        return;
+      }
+      
+      const commentInput = document.getElementById(`comment-input-${town}-${postIndex}`);
+      const commentText = commentInput.value.trim();
+      
+      if (!commentText) {
+        alert("Please enter a comment");
+        return;
+      }
+      
+      const posts = JSON.parse(localStorage.getItem(town)) || [];
+      if (posts[postIndex]) {
+        if (!posts[postIndex].comments) {
+          posts[postIndex].comments = [];
+        }
+        
+        posts[postIndex].comments.push({
+          author: currentUser.name,
+          text: commentText
+        });
+        
+        localStorage.setItem(town, JSON.stringify(posts));
+        commentInput.value = "";
+        renderFeed();
+      }
+    }
+
+    function showPage(page) {
+      currentPage = page;
+      hideAllSections();
+      
+      if (page === 'about') {
+        aboutPage.style.display = "block";
+      } else if (page === 'contact') {
+        contactPage.style.display = "block";
+      }
+    }
+
+    function goHome() {
+      currentPage = "home";
+      hideAllSections();
+      countyContainer.style.display = "grid";
+    }
+
+    function goBackFromUpload() {
+      if (currentTown) {
+        const [town, county] = currentTown.split(", ");
+        showFeed(town, county);
+      } else {
+        goHome();
+      }
+    }
+
+    window.onload = function() {
+      const savedCountyTowns = localStorage.getItem('countyTowns');
+      if (savedCountyTowns) {
+        Object.assign(countyTowns, JSON.parse(savedCountyTowns));
+      }
+      
+      if (currentUser) {
+        updateUserProfileDisplay();
+      }
+      
+      initializeSampleData();
+      populateCounties();
+      populateCountyDropdown();
+      
+      document.getElementById("signup-photo").addEventListener('change', previewProfilePhoto);
+      document.querySelector('#signupForm button').onclick = createAccount;
+    };
+  </script>
+</body>
+</html>
